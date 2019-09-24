@@ -55,29 +55,25 @@ class UsuarioDao extends Dao {
   public function buscar($id) {}
 
   public function inserir($usuario) {
-    if (!$usuario){
-      $_SESSION['erro'] = "Alguma coisa deu errado";
+    if (!$usuario || empty($usuario)){
+      throw new Exception("Alguma coisa deu errado");
       return;
     }
     $sql_check = "SELECT login FROM tb_usuario WHERE login = ?";
     $req_check = $this->pdo->prepare($sql_check);
     $req_check->bindValue(1, $usuario->getLogin());
     $req_check->execute();
-
+    var_dump($req_check->fetchAll());
     if ($req_check->rowCount() > 0){
-      $_SESSION['erro'] = "Usuário já tem cadastro";
+      throw new Exception("Usuário já tem cadastro");
       return;
     }
 
-    try {
-      $sql = "INSERT INTO tb_usuario (nome, login, senha) VALUES (?,?,?)";
-      $req->bindValue(1, $usuario->getNome());
-      $req->bindValue(2, $usuario->getLogin());
-      $req->bindValue(3, $usuario->getSenha());
-      $req = $this->pdo->prepare($sql);
-      $req->execute();
-    } catch (Exception $ex) {
-      $_SESSION['erro'] = $ex->getMessage();  
-    }
+    $sql = "INSERT INTO tb_usuario (nome, login, senha) VALUES (?,?,?)";
+    $req->bindValue(1, $usuario->getNome());
+    $req->bindValue(2, $usuario->getLogin());
+    $req->bindValue(3, $usuario->getSenha());
+    $req = $this->pdo->prepare($sql);
+    $req->execute();
   }
 }

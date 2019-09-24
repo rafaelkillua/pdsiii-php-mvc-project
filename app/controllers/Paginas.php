@@ -73,7 +73,7 @@ class Paginas extends ControladorCore {
 
         $usuario = (new UsuarioDao())->login($_POST['login'], $_POST['senha']);
         if (!empty($usuario)) {
-          $this->logaUsuario($usuario);
+          $this->logaUsuario($usuario->getLogin());
           header("Location:".BASE_URL."/produtos");
           return;
         } else {
@@ -93,10 +93,14 @@ class Paginas extends ControladorCore {
         require_once PATH_APP."/models/DAO/UsuarioDao.php";
 
         $usuario = new Usuario(null, $_POST['nome'], null, $_POST['login'], $_POST['senha']);
-        (new UsuarioDao())->inserir($usuario);
-        $this->logaUsuario($usuario);
-        header("Location:".BASE_URL."/produtos");
-        return;
+        try {
+          (new UsuarioDao())->inserir($usuario);
+          $this->logaUsuario($usuario->getLogin());
+          header("Location:".BASE_URL."/produtos");
+          return;
+        } catch (Exception $ex) {
+          $_SESSION['erro'] = $ex->getMessage();
+        }
       } else {
         $_SESSION['erro'] = "As senhas não conferem";
       }
