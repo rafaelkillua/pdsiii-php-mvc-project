@@ -1,9 +1,9 @@
 <?php
 
 class TipoUsuario {
-    
-    private $id;
-    private $nome;
-    
-    
+  
+  private $id;
+  private $nome;
+  
+  
 }

@@ -2,8 +2,8 @@
 
 
 class Admin {
-    
-    public function asdf() {
-        echo "AGORA TEM";
-    }
+  
+  public function asdf() {
+    echo "AGORA TEM";
+  }
 }
