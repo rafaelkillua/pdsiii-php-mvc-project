@@ -1,5 +1,5 @@
 <?php
 require_once PATH_APP . "/models/DAO/Conexao.php";
 
-$conexaoBanco = Conexao::getInstancia("db4free.net", "grafica", "rafaelkillua", "299792458");
+$conexaoBanco = Conexao::getInstancia("localhost", "projeto-mvc", "root", "");
 $conexaoBanco = $conexaoBanco->getConexao();
