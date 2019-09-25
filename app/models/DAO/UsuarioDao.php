@@ -9,10 +9,9 @@ class UsuarioDao extends Dao {
 
   public function login($login, $senha) {
     try {
-      $sql = "SELECT * FROM tb_usuario WHERE login = :login AND senha = :senha";
+      $sql = "SELECT * FROM tb_usuario WHERE login = :login";
       $req = $this->pdo->prepare($sql);
       $req->bindValue(":login", $login);
-      $req->bindValue(":senha", $senha);
       $req->execute();
 
       if ($req->rowCount() == 0){
@@ -21,8 +20,11 @@ class UsuarioDao extends Dao {
 
       $result = $req->fetchAll();
       $r = $result[0];
+      if (password_verify($senha, $r['senha'])) {
+        return new Usuario($r['id'], $r['nome'], $r['tb_tipo_usuario_id'], $r['login'], $r['senha']);
+      }
 
-      return new Usuario($r['id'], $r['nome'], $r['tb_tipo_usuario_id'], $r['login'], $r['senha']);
+      return null;
     } catch (Exception $ex) {
       echo "ERRO USUARIODAO: ".$ex->getMessage();
     }
@@ -63,17 +65,16 @@ class UsuarioDao extends Dao {
     $req_check = $this->pdo->prepare($sql_check);
     $req_check->bindValue(1, $usuario->getLogin());
     $req_check->execute();
-    var_dump($req_check->fetchAll());
     if ($req_check->rowCount() > 0){
       throw new Exception("Usuário já tem cadastro");
       return;
     }
 
-    $sql = "INSERT INTO tb_usuario (nome, login, senha) VALUES (?,?,?)";
-    $req->bindValue(1, $usuario->getNome());
-    $req->bindValue(2, $usuario->getLogin());
-    $req->bindValue(3, $usuario->getSenha());
+    $sql = "INSERT INTO tb_usuario (nome, login, senha) VALUES (:nome, :login, :senha)";
     $req = $this->pdo->prepare($sql);
+    $req->bindValue(":nome", $usuario->getNome());
+    $req->bindValue(":login", $usuario->getLogin());
+    $req->bindValue(":senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
     $req->execute();
   }
 }
