@@ -5,15 +5,15 @@ class PrecoProduto {
   private $id;
   private $produto; // Objeto
   private $precoCompra;
-  private $precovenda;
+  private $precoVenda;
   private $quantidade;
   private $status;
   
-  public function __construct($id, $produto, $precoCompra, $precovenda, $quantidade, $status=1) {
+  public function __construct($id, $produto, $precoCompra, $precoVenda, $quantidade, $status=1) {
     $this->id = $id;
     $this->produto = $produto;
     $this->precoCompra = $precoCompra;
-    $this->precovenda = $precovenda;
+    $this->precoVenda = $precoVenda;
     $this->quantidade = $quantidade;
     $this->status = $status;
   }
@@ -30,8 +30,8 @@ class PrecoProduto {
     return $this->precoCompra;
   }
 
-  public function getPrecovenda() {
-    return $this->precovenda;
+  public function getPrecoVenda() {
+    return $this->precoVenda;
   }
 
   public function getQuantidade() {
@@ -54,8 +54,8 @@ class PrecoProduto {
     $this->precoCompra = $precoCompra;
   }
 
-  public function setPrecovenda($precovenda) {
-    $this->precovenda = $precovenda;
+  public function setPrecoVenda($precoVenda) {
+    $this->precoVenda = $precoVenda;
   }
 
   public function setQuantidade($quantidade) {

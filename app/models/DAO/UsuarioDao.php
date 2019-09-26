@@ -8,48 +8,38 @@ class UsuarioDao extends Dao {
   public function atualizar($obj) {}
 
   public function login($login, $senha) {
-    try {
-      $sql = "SELECT * FROM tb_usuario WHERE login = :login";
-      $req = $this->pdo->prepare($sql);
-      $req->bindValue(":login", $login);
-      $req->execute();
+    $sql = "SELECT * FROM tb_usuario WHERE login = :login";
+    $req = $this->pdo->prepare($sql);
+    $req->bindValue(":login", $login);
+    $req->execute();
 
-      if ($req->rowCount() == 0){
-        return null; 
-      }
-
-      $result = $req->fetchAll();
-      $r = $result[0];
-      if (password_verify($senha, $r['senha'])) {
-        return new Usuario($r['id'], $r['nome'], $r['tb_tipo_usuario_id'], $r['login'], $r['senha']);
-      }
-
-      return null;
-    } catch (Exception $ex) {
-      echo "ERRO USUARIODAO: ".$ex->getMessage();
+    if ($req->rowCount() == 0){
+      return null; 
     }
+
+    $result = $req->fetchAll();
+    $r = $result[0];
+    if (password_verify($senha, $r['senha'])) {
+      return new Usuario($r['id'], $r['nome'], $r['tb_tipo_usuario_id'], $r['login'], $r['senha']);
+    }
+
+    return null;
   }
 
   public function buscarTodos() {
-    try {
-      $sql_user = "SELECT id, nome, login as l FROM tb_usuario";
-      $req = $this->pdo->prepare($sql_user);
-      $req->execute();
-      
-      if($req->rowCount() > 0){
-        $result = $req->fetchAll();
-        $usuarios = array();
+    $sql_user = "SELECT id, nome, login FROM tb_usuario";
+    $req = $this->pdo->prepare($sql_user);
+    $req->execute();
+    $usuarios = array();
+    
+    if ($req->rowCount() > 0){
+      $result = $req->fetchAll();
 
-        foreach ($result as $key => $value) {
-          array_push($usuarios, new Usuario($value['id'], $value['nome'], null,  $value['l'], null, null));
-        }
-      } else {
-        echo "Não há usuários";
+      foreach ($result as $key => $value) {
+        array_push($usuarios, new Usuario($value['id'], $value['nome'], null,  $value['login'], null, null));
       }
-      return $usuarios;
-    } catch (PDOException $e) {
-      $e->getMessage();
     }
+    return $usuarios;
   }
 
   public function excluir($id) {}
@@ -79,5 +69,6 @@ class UsuarioDao extends Dao {
     if ($req->rowCount() == 0) {
       throw new Exception("Houve algum erro.");
     }
+    return $this->pdo->lastInsertId();
   }
 }

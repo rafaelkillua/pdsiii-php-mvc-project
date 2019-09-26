@@ -1,5 +1,5 @@
-<div class="col-12 py-2">
-  <table border="1">
+<div class="col-12 py-2 px-5">
+  <table class="table">
     <tr>
       <th>COD</th>
       <th>Nome Produto</th>
@@ -17,6 +17,7 @@
     endforeach;?>
   </table>
 </div>
-<div class="col-12">
+<div class="col-12 d-flex justify-content-center">
   <a href="<?=BASE_URL."/sair"?>" class="btn btn-danger">Sair</a>
+  <a href="<?=BASE_URL."/produto/novo"?>" class="btn btn-primary">Cadastrar Produto</a>
 </div>

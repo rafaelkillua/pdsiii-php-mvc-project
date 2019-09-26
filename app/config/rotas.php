@@ -7,17 +7,17 @@ $rotas["cadastro"] = array("rota"=>"/cadastro", "controller"=>"Paginas", "acao"=
 $rotas["sobre"] = array("rota"=>"/sobre", "controller"=>"Paginas", "acao"=>"sobre");
 
 // HOME POST
-$rotas["entrar"] = array("rota"=>"/entrar", "controller"=>"Paginas", "acao"=>"entrar");
-$rotas["cadastrar"] = array("rota"=>"/cadastrar", "controller"=>"Paginas", "acao"=>"cadastrar");
-$rotas["sair"] = array("rota"=>"/sair", "controller"=>"Paginas", "acao"=>"sair");
+$rotas["entrar"] = array("rota"=>"/entrar", "controller"=>"AcoesHome", "acao"=>"entrar");
+$rotas["cadastrar"] = array("rota"=>"/cadastrar", "controller"=>"AcoesHome", "acao"=>"cadastrar");
+$rotas["sair"] = array("rota"=>"/sair", "controller"=>"AcoesHome", "acao"=>"sair");
 
 // PRODUTOS GET
-$rotas["produtos"] = array("rota"=>"/produtos", "controller"=>"Paginas", "acao"=>"listar");
+$rotas["produtos"] = array("rota"=>"/produtos", "controller"=>"Paginas", "acao"=>"listarProdutos");
 $rotas["produtos/listar"] = array("rota"=>"/produtos/listar", "controller"=>"Paginas", "acao"=>"sobre");
 $rotas["produto/detalhar"] = array("rota"=>"/produto/detalhar", "controller"=>"Paginas", "acao"=>"detalharProduto");
 $rotas["produto/novo"] = array("rota"=>"/produto/novo", "controller"=>"Paginas", "acao"=>"novoProduto");
 
 // PRODUTOS POST
-$rotas["produto/cadastrar"] = array("rota"=>"/produto/cadastrar", "controller"=>"Paginas", "acao"=>"cadastrarProduto");
+$rotas["produto/cadastrar"] = array("rota"=>"/produto/cadastrar", "controller"=>"AcoesProduto", "acao"=>"cadastrarProduto");
 
 //echo "<pre>".print_r($rotas, true)."</pre>";

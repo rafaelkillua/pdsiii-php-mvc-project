@@ -1,10 +1,6 @@
 <?php
 require_once PATH_APP."/models/DAO/Dao.php";
-require_once PATH_APP."/models/DAO/ProdutoDao.php";
-require_once PATH_APP."/models/dados/PrecoProduto.php";
-require_once PATH_APP."/models/dados/Produto.php";
-
-
+require_once PATH_APP."/models/Dados/PrecoProduto.php";
 class PrecoProdutoDao extends Dao {
   
   public function atualizar($obj) {
@@ -41,8 +37,24 @@ class PrecoProdutoDao extends Dao {
 
   public function excluir($id) {}
 
-  public function inserir($obj) {
-    
-  }
+  public function inserir($precoProduto) {
+    if (!$precoProduto || empty($precoProduto)){
+      throw new Exception("Alguma coisa deu errado");
+      return;
+    }
 
+    $sql = "INSERT INTO tb_preco_produto (tb_produto_id, preco_compra, preco_venda, quantidade, status) VALUES (:produto_id, :preco_compra, :preco_venda, :quantidade, :status)";
+    var_dump($this);
+    $req = $this->pdo->prepare($sql);
+    $req->bindValue(":produto_id", $precoProduto->getProduto()->getId());
+    $req->bindValue(":preco_compra", $precoProduto->getPrecoCompra());
+    $req->bindValue(":preco_venda", $precoProduto->getPrecoVenda());
+    $req->bindValue(":quantidade", $precoProduto->getQuantidade());
+    $req->bindValue(":status", $precoProduto->getStatus());
+    $req->execute();
+    if ($req->rowCount() == 0) {
+      throw new Exception("Houve algum erro.");
+    }
+    return $this->pdo->lastInsertId();
+  }
 }
