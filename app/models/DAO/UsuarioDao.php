@@ -76,5 +76,8 @@ class UsuarioDao extends Dao {
     $req->bindValue(":login", $usuario->getLogin());
     $req->bindValue(":senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
     $req->execute();
+    if ($req->rowCount() == 0) {
+      throw new Exception("Houve algum erro.");
+    }
   }
 }
