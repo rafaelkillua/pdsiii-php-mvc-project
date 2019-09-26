@@ -34,21 +34,20 @@ class AcoesProduto extends ControladorCore {
         require_once PATH_APP."/models/DAO/ProdutoDao.php";
         require_once PATH_APP."/models/Dados/PrecoProduto.php";
         require_once PATH_APP."/models/DAO/PrecoProdutoDao.php";
-        
+
         $produto = new Produto(null, $_POST['nome']);
         try {
           $id = (new ProdutoDao())->inserir($produto);
           $produto->setId(intval($id));
           
           $precoProduto = new PrecoProduto(null, $produto, $_POST['preco_compra'], $_POST['preco_venda'], $_POST['quantidade']);
-          (new PrecoProdutoDao())->inserir($precoProduto);
+          echo (new PrecoProdutoDao())->inserir($precoProduto);
           
           header("Location:".BASE_URL."/produtos");
           return;
         } catch (Exception $ex) {
           $_SESSION['erro'] = $ex->getMessage();
         }
-        
       } else {
         $_SESSION['erro'] = "Informe todos os campos obrigatórios";
       }

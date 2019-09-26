@@ -4,7 +4,7 @@ abstract class Dao {
   protected $pdo;
   
   public function __construct() {
-    require_once PATH_APP."/config/banco.php";
+    require PATH_APP."/config/banco.php";
     
     $this->pdo = $conexaoBanco;
   }

@@ -1,5 +1,5 @@
 <?php
-require_once PATH_APP."/models/DAO/Dao.php";
+include_once PATH_APP."/models/DAO/Dao.php";
 require_once PATH_APP."/models/Dados/PrecoProduto.php";
 class PrecoProdutoDao extends Dao {
   
@@ -44,7 +44,6 @@ class PrecoProdutoDao extends Dao {
     }
 
     $sql = "INSERT INTO tb_preco_produto (tb_produto_id, preco_compra, preco_venda, quantidade, status) VALUES (:produto_id, :preco_compra, :preco_venda, :quantidade, :status)";
-    var_dump($this);
     $req = $this->pdo->prepare($sql);
     $req->bindValue(":produto_id", $precoProduto->getProduto()->getId());
     $req->bindValue(":preco_compra", $precoProduto->getPrecoCompra());

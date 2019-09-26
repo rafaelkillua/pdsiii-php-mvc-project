@@ -1,5 +1,5 @@
 <?php
-require_once PATH_APP."/models/DAO/Dao.php";
+include_once PATH_APP."/models/DAO/Dao.php";
 require_once PATH_APP."/models/Dados/Produto.php";
 class ProdutoDao extends Dao {
   
