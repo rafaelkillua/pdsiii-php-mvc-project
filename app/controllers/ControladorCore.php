@@ -34,7 +34,15 @@ class ControladorCore {
   }
   
   protected function estaLogado() {
-    return isset($_SESSION['usuario-sistema']) ? true : false;
+    return isset($_SESSION['usuario-sistema']);
+  }
+
+  protected function getUsuarioLogado() {
+    if ($this->estaLogado()) {
+      $this->carregarModelo("Usuario");
+      return unserialize($_SESSION['usuario-sistema']);
+    }
+    return null;
   }
   
   protected function logaUsuario($usuario) {

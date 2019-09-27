@@ -20,7 +20,7 @@ class UsuarioDao extends Dao {
     $result = $req->fetchAll();
     $r = $result[0];
     if (password_verify($senha, $r['senha'])) {
-      return new Usuario($r['id'], $r['nome'], $r['tb_tipo_usuario_id'], $r['login'], $r['senha']);
+      return new Usuario($r['id'], $r['nome'], $r['login'], null, $r['tb_tipo_usuario_id']);
     }
 
     return null;
@@ -36,7 +36,7 @@ class UsuarioDao extends Dao {
       $result = $req->fetchAll();
 
       foreach ($result as $key => $value) {
-        array_push($usuarios, new Usuario($value['id'], $value['nome'], null,  $value['login'], null, null));
+        array_push($usuarios, new Usuario($value['id'], $value['nome'], $value['login']));
       }
     }
     return $usuarios;

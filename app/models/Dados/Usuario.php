@@ -9,7 +9,7 @@ class Usuario {
   private $tipo;
 
   
-  public function __construct($id, $nome, $tipo, $login, $senha) {
+  public function __construct($id, $nome, $login, $senha=null, $tipo=null) {
     $this->id = $id;
     $this->nome = $nome;
     $this->$tipo = $tipo;

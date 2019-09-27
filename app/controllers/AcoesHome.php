@@ -12,7 +12,7 @@ class AcoesHome extends ControladorCore {
         try {
           $usuario = (new UsuarioDao())->login($_POST['login'], $_POST['senha']);
           if (!empty($usuario)) {
-            $this->logaUsuario($usuario->getLogin());
+            $this->logaUsuario($usuario);
             header("Location:".BASE_URL."/produtos");
             return;
           } else {
@@ -34,11 +34,11 @@ class AcoesHome extends ControladorCore {
         require_once PATH_APP."/models/Dados/Usuario.php";
         require_once PATH_APP."/models/DAO/UsuarioDao.php";
 
-        $usuario = new Usuario(null, $_POST['nome'], null, $_POST['login'], $_POST['senha']);
+        $usuario = new Usuario(null, $_POST['nome'], $_POST['login'], $_POST['senha']);
         try {
           $id = (new UsuarioDao())->inserir($usuario);
           $usuario->setId($id);
-          $this->logaUsuario($usuario->getLogin());
+          $this->logaUsuario($usuario);
           header("Location:".BASE_URL."/produtos");
           return;
         } catch (Exception $ex) {
