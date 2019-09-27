@@ -36,6 +36,22 @@ class Paginas extends ControladorCore {
     }
   }
 
+  public function detalharProduto() {
+    if (!$this->estaLogado()) {
+      header("Location:".BASE_URL);
+    } else {
+      $this->carregarDAO("PrecoProdutoDao");
+      $id = $_GET['id'];
+
+      $produto = (new PrecoProdutoDao())->buscar($id);
+
+      $this->addDadosPagina("produto", $produto);
+      $this->carregarView("v_detalhar_produto");
+
+      //echo "<pre>".print_r($produtos, true)."</pre>";
+    }
+  }
+
   public function novoProduto() {
     if (!$this->estaLogado()) {
       header("Location:".BASE_URL."/");

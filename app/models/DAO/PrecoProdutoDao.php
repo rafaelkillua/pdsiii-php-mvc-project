@@ -1,6 +1,7 @@
 <?php
 include_once PATH_APP."/models/DAO/Dao.php";
 require_once PATH_APP."/models/Dados/PrecoProduto.php";
+require_once PATH_APP."/models/Dados/Produto.php";
 class PrecoProdutoDao extends Dao {
   
   public function atualizar($obj) {
@@ -8,26 +9,22 @@ class PrecoProdutoDao extends Dao {
   }
 
   public function buscar($id) {
-    try {
-      $sql = "SELECT * FROM tb_preco_produto WHERE id = :id";
-      $requisicao = $this->pdo->prepare($sql);
-      $requisicao->bindValue(":id", $id);
-      $requisicao->execute();
-      
-      $resultado = $requisicao->fetch();
-      
-      if (!empty($resultado)) {
-        $pDAO = new ProdutoDao();
-        $produto = $pDAO->buscar($resultado['tb_produto_id']);
-        
-        return new PrecoProduto($resultado['id'], 
-            $produto, $resultado['preco_compra'], 
-            $resultado['preco_venda'], $resultado['quantidade'], 
-            $resultado['status']);
-      }
-      
-    } catch (Exception $ex) {
-      echo "DEU ERRO".$ex->getMessage();
+    $sql = "SELECT pp.id, p.id as produto_id, p.nome, pp.preco_compra, pp.preco_venda, pp.quantidade, pp.status FROM tb_preco_produto pp JOIN tb_produto p ON pp.tb_produto_id = p.id WHERE p.id = :id AND status = 1";
+    $requisicao = $this->pdo->prepare($sql);
+    $requisicao->bindValue(":id", $id);
+    $requisicao->execute();
+    
+    $resultado = $requisicao->fetch();
+    
+    if (!empty($resultado)) {
+      $produto = new Produto($resultado['produto_id'], $resultado['nome']);
+
+      return new PrecoProduto($resultado['id'], 
+          $produto, $resultado['preco_compra'], 
+          $resultado['preco_venda'], $resultado['quantidade'], 
+          $resultado['status']);
+    } else {
+      return null;
     }
   }
 
