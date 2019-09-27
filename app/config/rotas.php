@@ -20,4 +20,7 @@ $rotas["produto/novo"] = array("rota"=>"/produto/novo", "controller"=>"Paginas",
 // PRODUTOS POST
 $rotas["produto/cadastrar"] = array("rota"=>"/produto/cadastrar", "controller"=>"AcoesProduto", "acao"=>"cadastrarProduto");
 
+// VENDAS POST
+$rotas["produto/comprar"] = array("rota"=>"/produto/comprar", "controller"=>"AcoesVenda", "acao"=>"cadastrarVenda");
+
 //echo "<pre>".print_r($rotas, true)."</pre>";
