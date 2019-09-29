@@ -5,7 +5,7 @@ class Paginas extends ControladorCore {
   
   public function index() {
     if ($this->estaLogado()) {
-      header("Location:".BASE_URL."/produtos");
+      header("Location:".BASE_URL."/painel");
       return;
     }
     $this->addTituloPagina("Home");
@@ -14,23 +14,26 @@ class Paginas extends ControladorCore {
 
   public function cadastro() {
     if ($this->estaLogado()) {
-      header("Location:".BASE_URL."/produtos");
+      header("Location:".BASE_URL."/painel");
       return;
     }
     $this->addTituloPagina("Cadastro");
     $this->carregarView("v_cadastro");
   }
 
-  public function listarProdutos() {
+  public function painel() {
     if (!$this->estaLogado()) {
       header("Location:".BASE_URL);
     } else {
       $this->carregarDAO("ProdutoDao");
+      $this->carregarDAO("VendaDao");
 
       $produtos = (new ProdutoDao())->buscarTodos();
+      $vendas = (new VendaDao())->buscarPorUsuario($this->getUsuarioLogado());
 
       $this->addDadosPagina("produtos", $produtos);
-      $this->carregarView("v_produtos");
+      $this->addDadosPagina("vendas", $vendas);
+      $this->carregarView("v_painel");
 
       //echo "<pre>".print_r($produtos, true)."</pre>";
     }

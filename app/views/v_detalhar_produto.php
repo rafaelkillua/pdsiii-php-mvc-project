@@ -21,7 +21,7 @@
         <input class="flex-grow-1 mr-2" name="quantidade" placeholder="Quantidade a comprar" type="number" step="1" min="0" max="<?=$precoProduto->getQuantidade()?>" <?=$precoProduto->getQuantidade() < 1 ? 'disabled' : ''?>>
         <button class="btn btn-success" type="submit">Comprar</button>
       </form>
-      <a href="<?=BASE_URL."/produtos"?>" class="btn btn-primary">Voltar</a>
+      <a href="<?=BASE_URL."/painel"?>" class="btn btn-primary">Voltar</a>
       <?php echo isset($_SESSION["erro"]) ? $_SESSION["erro"] : ""?>
     </div>
   </body>

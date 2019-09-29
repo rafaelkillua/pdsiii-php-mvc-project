@@ -1,7 +1,7 @@
         </div>
       </div>
     <footer>
-      <!--<div>&copy; Rodapé do site - <?=date("Y")?></div>-->
+      <div class="col-12 d-flex justify-content-center mt-5">&copy; Rodapé do site - <?=date("Y")?></div>
     </footer>
   </body>
 </html>

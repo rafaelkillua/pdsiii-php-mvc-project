@@ -23,7 +23,7 @@ class AcoesVenda extends ControladorCore {
         try {
           (new VendaDao())->inserir($itemVenda);
           
-          header("Location:".BASE_URL."/produtos");
+          header("Location:".BASE_URL."/painel");
           return;
         } catch (Exception $ex) {
           $_SESSION['erro'] = $ex->getMessage();

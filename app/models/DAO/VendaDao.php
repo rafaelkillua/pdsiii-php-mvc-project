@@ -8,10 +8,48 @@ class VendaDao extends Dao {
   public function atualizar($obj) {
   }
 
-  public function buscar($id) {
+  public function buscarPorUsuario($usuario) {
+    require_once PATH_APP."/models/Dados/Produto.php";
+    require_once PATH_APP."/models/Dados/PrecoProduto.php";
+    
+    $sql = "SELECT 
+            sv.id as status_venda_id, sv.nome as status_venda_nome,
+            v.id as venda_id, v.data as venda_data,
+            iv.id as item_venda_id, iv.quantidade as item_venda_quantidade,
+            pp.id as preco_produto_id, pp.preco_compra, pp.preco_venda, pp.quantidade as preco_produto_quantidade, pp.status,
+            p.id as produto_id, p.nome as produto_nome 
+            FROM tb_venda v 
+            JOIN tb_status_venda sv ON sv.id = v.tb_status_venda_id 
+            JOIN tb_item_venda iv ON iv.tb_venda_id = v.id
+            JOIN tb_preco_produto pp ON pp.id = iv.tb_preco_produto_id
+            JOIN tb_produto p ON pp.tb_produto_id = p.id
+            WHERE v.usuario_cliente = :usuario_id 
+            AND pp.status = 1";
+    $req = $this->pdo->prepare($sql);
+    $req->bindValue(":usuario_id", $usuario->getId());
+    $req->execute();
+    if ($req->rowCount() == 0) {
+      throw new Exception("Houve algum erro ao pesquisar as vendas do usuário.");
+    }
+    
+    $vendas = array();
+    $result = $req->fetchAll();
+    foreach ($result as $key => $value) {
+      $statusVenda = new StatusVenda($value["status_venda_id"], $value["status_venda_nome"]);
+      $data = (new DateTime($value["venda_data"]))->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+      $venda = new Venda($value["venda_id"], $statusVenda, $usuario, $data->format("Y-m-d H:i:s"));
+      $produto = new Produto($value["produto_id"], $value["produto_nome"]);
+      $precoProduto = new PrecoProduto($value["preco_produto_id"], $produto, $value["preco_compra"], $value["preco_venda"], $value["preco_produto_quantidade"], $value["status"]);
+      $itemVenda = new ItemVenda($value["item_venda_id"], $venda, $precoProduto, $value["preco_produto_quantidade"]);
+      array_push($vendas, $itemVenda);
+    }
+    return $vendas;
   }
 
   public function buscarTodos() {
+  }
+
+  public function buscar($id) {
   }
 
   public function excluir($id) {

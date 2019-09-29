@@ -43,7 +43,7 @@ class AcoesProduto extends ControladorCore {
           $precoProduto = new PrecoProduto(null, $produto, $_POST['preco_compra'], $_POST['preco_venda'], $_POST['quantidade']);
           echo (new PrecoProdutoDao())->inserir($precoProduto);
           
-          header("Location:".BASE_URL."/produtos");
+          header("Location:".BASE_URL."/painel");
           return;
         } catch (Exception $ex) {
           $_SESSION['erro'] = $ex->getMessage();

@@ -13,7 +13,7 @@ class AcoesHome extends ControladorCore {
           $usuario = (new UsuarioDao())->login($_POST['login'], $_POST['senha']);
           if (!empty($usuario)) {
             $this->logaUsuario($usuario);
-            header("Location:".BASE_URL."/produtos");
+            header("Location:".BASE_URL."/painel");
             return;
           } else {
             $_SESSION['erro'] = "Login ou senha incorreta";
@@ -39,7 +39,7 @@ class AcoesHome extends ControladorCore {
           $id = (new UsuarioDao())->inserir($usuario);
           $usuario->setId($id);
           $this->logaUsuario($usuario);
-          header("Location:".BASE_URL."/produtos");
+          header("Location:".BASE_URL."/painel");
           return;
         } catch (Exception $ex) {
           $_SESSION['erro'] = $ex->getMessage();

@@ -12,8 +12,7 @@ $rotas["cadastrar"] = array("rota"=>"/cadastrar", "controller"=>"AcoesHome", "ac
 $rotas["sair"] = array("rota"=>"/sair", "controller"=>"AcoesHome", "acao"=>"sair");
 
 // PRODUTOS GET
-$rotas["produtos"] = array("rota"=>"/produtos", "controller"=>"Paginas", "acao"=>"listarProdutos");
-$rotas["produtos/listar"] = array("rota"=>"/produtos/listar", "controller"=>"Paginas", "acao"=>"sobre");
+$rotas["produtos"] = array("rota"=>"/painel", "controller"=>"Paginas", "acao"=>"painel");
 $rotas["produto/detalhar"] = array("rota"=>"/produto/detalhar", "controller"=>"Paginas", "acao"=>"detalharProduto");
 $rotas["produto/novo"] = array("rota"=>"/produto/novo", "controller"=>"Paginas", "acao"=>"novoProduto");
 
