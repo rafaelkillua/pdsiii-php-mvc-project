@@ -74,11 +74,40 @@ class PrecoProdutoDao extends Dao {
   }
 
   public function buscarTodos() {
+    $sql = "SELECT pp.id, p.id as produto_id, p.nome, pp.preco_compra, pp.preco_venda, pp.quantidade, pp.status
+            FROM tb_preco_produto pp
+            JOIN tb_produto p ON pp.tb_produto_id = p.id
+            WHERE pp.id = :id AND status = 1";
+    $requisicao = $this->pdo->prepare($sql);
+    $requisicao->bindValue(":id", $id);
+    $requisicao->execute();
     
+    $precosProduto = array();
+    
+    if ($requisicao->rowCount() > 0){
+      $resultado = $requisicao->fetchAll();
+
+      foreach ($result as $key => $value) {
+        $produto = new Produto($resultado['produto_id'], $resultado['nome']);
+        array_push($precosProduto, new PrecoProduto($resultado['id'], 
+                                    $produto, $resultado['preco_compra'], 
+                                    $resultado['preco_venda'], $resultado['quantidade'], 
+                                    $resultado['status']));
+      }
+    }
+    return $precosProduto;
   }
 
   public function excluir($id) {
-    
+    $sql = "DELETE FROM tb_preco_produto
+            WHERE id = :id";
+    $req = $this->pdo->prepare($sql);
+    $req->bindValue(":id", $id);
+    $req->execute();
+    if ($req->rowCount() == 0) {
+      throw new Exception("Houve algum erro.");
+    }
+    return true;
   }
 
   public function inserir($precoProduto) {

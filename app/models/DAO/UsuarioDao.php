@@ -3,9 +3,30 @@ require_once PATH_APP."/models/DAO/Dao.php";
 require_once PATH_APP."/models/Dados/Usuario.php";
 
 class UsuarioDao extends Dao {
-  public static $v = 1;
 
-  public function atualizar($obj) {}
+  public function atualizar($usuario) {
+    if (!$usuario || empty($usuario)){
+      throw new Exception("Alguma coisa deu errado");
+      return;
+    }
+
+    $sql = "UPDATE tb_usuario
+            SET nome = :nome, login = :login, senha = :senha
+            WHERE id = :id";
+    $req = $this->pdo->prepare($sql);
+    $req->bindValue(":id", $usuario->getId());
+    $req->bindValue(":nome", $usuario->getNome());
+    $req->bindValue(":login", $usuario->getLogin());
+    if (!empty($usuario->getSenha())) {
+      $req->bindValue(":senha", $usuario->getSenha());
+    }
+    
+    $req->execute();
+    if ($req->rowCount() == 0) {
+      throw new Exception("Houve algum erro.");
+    }
+    return $usuario;
+  }
 
   public function login($login, $senha) {
     $sql = "SELECT * FROM tb_usuario WHERE login = :login";
@@ -42,9 +63,33 @@ class UsuarioDao extends Dao {
     return $usuarios;
   }
 
-  public function excluir($id) {}
+  public function excluir($id) {
+    $sql = "DELETE FROM tb_usuario
+            WHERE id = :id";
+    $req = $this->pdo->prepare($sql);
+    $req->bindValue(":id", $id);
+    $req->execute();
+    if ($req->rowCount() == 0) {
+      throw new Exception("Houve algum erro.");
+    }
+    return true;
+  }
 
-  public function buscar($id) {}
+  public function buscar($id) {
+    $sql = "SELECT * FROM tb_usuario
+            WHERE id = :id";
+    $req = $this->pdo->prepare($sql);
+    $req->bindValue(":id", $id);
+    $req->execute();
+    
+    $resultado = $req->fetch();
+    
+    if (!empty($resultado)) {
+      return new Usuario($resultado['id'], $resultado['nome'], $resultado['login']);
+    } else {
+      return null;
+    }
+  }
 
   public function inserir($usuario) {
     if (!$usuario || empty($usuario)){
