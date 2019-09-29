@@ -10,6 +10,7 @@ class Conexao {
       $this->conexao = 
           new PDO("mysql:host=$hostBanco;dbname=$nomeBanco;charset=utf8", 
               $usuario, $senha);
+      $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       
     } catch (Exception $ex) {
       echo $ex->getMessage();

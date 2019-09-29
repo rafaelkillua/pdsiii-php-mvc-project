@@ -46,10 +46,26 @@ class Paginas extends ControladorCore {
       $this->carregarDAO("PrecoProdutoDao");
       $id = $_GET['id'];
 
-      $produto = (new PrecoProdutoDao())->buscar($id);
+      $produto = (new PrecoProdutoDao())->buscarPorProduto($id);
 
       $this->addDadosPagina("produto", $produto);
       $this->carregarView("v_detalhar_produto");
+
+      //echo "<pre>".print_r($produtos, true)."</pre>";
+    }
+  }
+
+  public function editarProduto() {
+    if (!$this->estaLogado()) {
+      header("Location:".BASE_URL);
+    } else {
+      $this->carregarDAO("PrecoProdutoDao");
+      $id = $_GET['id'];
+
+      $produto = (new PrecoProdutoDao())->buscarPorProduto($id);
+
+      $this->addDadosPagina("produto", $produto);
+      $this->carregarView("v_editar_produto");
 
       //echo "<pre>".print_r($produtos, true)."</pre>";
     }

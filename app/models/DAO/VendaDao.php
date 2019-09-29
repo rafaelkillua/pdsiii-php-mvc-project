@@ -36,7 +36,7 @@ class VendaDao extends Dao {
     $result = $req->fetchAll();
     foreach ($result as $key => $value) {
       $statusVenda = new StatusVenda($value["status_venda_id"], $value["status_venda_nome"]);
-      $data = (new DateTime($value["venda_data"]))->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+      $data = (new DateTime($value["venda_data"]));
       $venda = new Venda($value["venda_id"], $statusVenda, $usuario, $data->format("Y-m-d H:i:s"));
       $produto = new Produto($value["produto_id"], $value["produto_nome"]);
       $precoProduto = new PrecoProduto($value["preco_produto_id"], $produto, $value["preco_compra"], $value["preco_venda"], $value["preco_produto_quantidade"], $value["status"]);

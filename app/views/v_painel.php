@@ -37,7 +37,7 @@
           <td><?=$v->getVenda()->getId();?></td>
           <td><?=$v->getPrecoProduto()->getProduto()->getNome();?></td>
           <td><?=$v->getQuantidade();?></td>
-          <td><?=$v->getPrecoProduto()->getPrecoVenda();?></td>
+          <td><?=$v->getPrecoProduto()->getPrecoVenda()*$v->getQuantidade();?></td>
           <td><?=$v->getVenda()->getData();?></td>
           <td><?=$v->getVenda()->getStatusVenda()->getNome();?></td>
         </tr>
@@ -48,5 +48,5 @@
 </div>
 <div class="col-12 d-flex justify-content-center">
   <a href="<?=BASE_URL."/sair"?>" class="btn btn-danger">Sair</a>
-  <a href="<?=BASE_URL."/produto/novo"?>" class="btn btn-primary">Cadastrar Produto</a>
+  <a href="<?=BASE_URL."/produto/novo"?>" class="btn btn-primary ml-1">Cadastrar Produto</a>
 </div>

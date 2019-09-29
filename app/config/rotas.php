@@ -14,10 +14,12 @@ $rotas["sair"] = array("rota"=>"/sair", "controller"=>"AcoesHome", "acao"=>"sair
 // PRODUTOS GET
 $rotas["produtos"] = array("rota"=>"/painel", "controller"=>"Paginas", "acao"=>"painel");
 $rotas["produto/detalhar"] = array("rota"=>"/produto/detalhar", "controller"=>"Paginas", "acao"=>"detalharProduto");
+$rotas["produto/editar"] = array("rota"=>"/produto/editar", "controller"=>"Paginas", "acao"=>"editarProduto");
 $rotas["produto/novo"] = array("rota"=>"/produto/novo", "controller"=>"Paginas", "acao"=>"novoProduto");
 
 // PRODUTOS POST
 $rotas["produto/cadastrar"] = array("rota"=>"/produto/cadastrar", "controller"=>"AcoesProduto", "acao"=>"cadastrarProduto");
+$rotas["produto/editarProduto"] = array("rota"=>"/produto/editarProduto", "controller"=>"AcoesProduto", "acao"=>"editarProduto");
 
 // VENDAS POST
 $rotas["produto/comprar"] = array("rota"=>"/produto/comprar", "controller"=>"AcoesVenda", "acao"=>"cadastrarVenda");

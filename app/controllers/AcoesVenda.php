@@ -18,7 +18,7 @@ class AcoesVenda extends ControladorCore {
         $statusVenda = new StatusVenda(null, "Ok");
         $data = (new DateTime())->setTimezone(new DateTimeZone('America/Sao_Paulo'));
         $venda = new Venda(null, $statusVenda, $this->getUsuarioLogado(), $data->format("Y-m-d H:i:s"));
-        $precoProduto = (new PrecoProdutoDao())->buscar($_GET['id']);
+        $precoProduto = (new PrecoProdutoDao())->buscarPorProduto($_GET['id']);
         $itemVenda = new ItemVenda(null, $venda, $precoProduto, $_POST['quantidade']);
         try {
           (new VendaDao())->inserir($itemVenda);
